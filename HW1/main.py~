@@ -9,17 +9,13 @@ reader = vtkStructuredPointsReader()
 reader.SetFileName(file_name)
 reader.Update() # Needed because of GetScalarRange
 output = reader.GetOutput()
-#scalar_range = output.GetScalarRange()
-geometryFilter = vtkImageDataGeometryFilter()
-geometryFilter.SetInputConnection(reader.GetOutputPort())
-geometryFilter.Update()
-
+scalar_range = output.GetScalarRange()
  
 # Create the mapper that corresponds the objects of the vtk file
 # into graphics elements
-mapper = vtkPolyDataMapper()
-mapper.SetInput(geometryFilter.GetOutput())
-#mapper.SetScalarRange(scalar_range)
+mapper = vtkDataSetMapper()
+mapper.SetInput(output)
+mapper.SetScalarRange(scalar_range)
  
 # Create the Actor
 actor = vtkActor()
